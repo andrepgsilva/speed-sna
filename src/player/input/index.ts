@@ -9,6 +9,7 @@ const playerInput = (key: string) => {
   if (! availableInputs.includes(key)) return;
 
   playerActions(state)[key]();
+  
   stateObserver.notify(key);
 }
 

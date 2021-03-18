@@ -1,7 +1,7 @@
 import { StateType } from "..";
 
 export const gameAvailableInputSelector = (state: StateType) => {
-  return state.game.availableInput;
+  return state.input.availableInputs;
 }
 
 export const stateObserverSelector = (state: StateType) => {
@@ -9,8 +9,5 @@ export const stateObserverSelector = (state: StateType) => {
 }
 
 export const playerPositionSelector = (state: StateType) => {
-  return {
-    x: state.player.position.x,
-    y: state.player.position.y,
-  }
+  return state.character;
 }

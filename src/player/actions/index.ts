@@ -1,34 +1,87 @@
-import { playerCoordinatesLimits } from "../index";
+import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH } from "../index";
 import { StateType } from "../../store";
-import { changePlayerPositionState } from "../../store/actions";
+import { changeCharacterDirectionState, changeCharacterPartPositionState } from "../../store/actions";
 import { playerPositionSelector } from "../../store/selectors";
 
 const playerActions = (state: StateType) => {
-  const {x, y} = playerPositionSelector(state);
-  const {width: horizontalLimit, height: verticalLimit} = playerCoordinatesLimits(); 
+  const {width: horizontalLimit, height: verticalLimit} = playerCoordinatesLimits();
+  const character = playerPositionSelector(state);
+  const characterHead = character.position[character.position.length - 1];
 
   return {
-    ArrowDown: () => {
-      if (y + 10 <= verticalLimit) {
-        changePlayerPositionState(state, x, y + 10)
+    ArrowUp: () => {
+      if (character.direction === 'ArrowDown') return;
+
+      if (characterHead.y - PLAYER_WIDTH >= 0) {
+        changeCharacterDirectionState(state, 'ArrowUp');
+
+        const originalCharacter = JSON.parse(JSON.stringify(character));
+
+        changeCharacterPartPositionState(
+          state, 
+          character.position.length - 1, 
+          characterHead.x, 
+          characterHead.y - PLAYER_WIDTH
+        );
+
+        addCharacterBodyToHead(state, originalCharacter);
       }
     },
 
-    ArrowUp: () => {
-      if (y - 10 >= 0) {
-        changePlayerPositionState(state, x, y - 10)
+    ArrowDown: () => {
+      if (character.direction === 'ArrowUp') return;
+
+      if (characterHead.y + PLAYER_WIDTH <= verticalLimit) {
+        changeCharacterDirectionState(state, 'ArrowDown');
+
+        const originalCharacter = JSON.parse(JSON.stringify(character));
+
+        changeCharacterPartPositionState(
+          state, 
+          character.position.length - 1, 
+          characterHead.x, 
+          characterHead.y + PLAYER_WIDTH
+        );
+
+        addCharacterBodyToHead(state, originalCharacter);
       }
     },
 
     ArrowRight: () => {
-      if (x + 10 <= horizontalLimit) {
-        changePlayerPositionState(state, x + 10, y)
+      if (character.direction === 'ArrowLeft') return;
+
+      if (characterHead.x + PLAYER_WIDTH <= horizontalLimit) {
+        changeCharacterDirectionState(state, 'ArrowRight');
+
+        const originalCharacter = JSON.parse(JSON.stringify(character));
+
+        changeCharacterPartPositionState(
+          state, 
+          character.position.length - 1, 
+          characterHead.x + PLAYER_WIDTH, 
+          characterHead.y
+        );
+
+        addCharacterBodyToHead(state, originalCharacter);
       }
     },
 
     ArrowLeft: () => {
-      if (x - 10 >= 0) {
-        changePlayerPositionState(state, x - 10, y)
+      if (character.direction === 'ArrowRight') return;
+
+      if (characterHead.x - PLAYER_WIDTH >= 0) {
+        changeCharacterDirectionState(state, 'ArrowLeft');
+        
+        const originalCharacter = JSON.parse(JSON.stringify(character));
+
+        changeCharacterPartPositionState(
+          state, 
+          character.position.length - 1, 
+          characterHead.x - PLAYER_WIDTH, 
+          characterHead.y
+        );
+        
+        addCharacterBodyToHead(state, originalCharacter);
       }
     },
   }

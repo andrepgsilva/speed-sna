@@ -1,6 +1,9 @@
-import { StateType } from "..";
+import { CharacterDirectionType, StateType } from "..";
 
-export const changePlayerPositionState = (state: StateType, x: number, y: number) => {
-  state.player.position.x = x;
-  state.player.position.y = y;
+export const changeCharacterPartPositionState = (state: StateType, index: number, x: number, y: number) => {
+  state.character.position[index] = { x, y };
+}
+
+export const changeCharacterDirectionState = (state: StateType, direction: CharacterDirectionType) => {
+  state.character.direction = direction;
 }
