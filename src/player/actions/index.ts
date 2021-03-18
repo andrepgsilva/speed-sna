@@ -1,11 +1,11 @@
 import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH } from "../index";
 import { StateType } from "../../store";
 import { changeCharacterDirectionState, changeCharacterPartPositionState } from "../../store/actions";
-import { playerPositionSelector } from "../../store/selectors";
+import { characterSelector } from "../../store/selectors";
 
 const playerActions = (state: StateType) => {
   const {width: horizontalLimit, height: verticalLimit} = playerCoordinatesLimits();
-  const character = playerPositionSelector(state);
+  const character = characterSelector(state);
   const characterHead = character.position[character.position.length - 1];
 
   return {

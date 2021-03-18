@@ -1,0 +1,10 @@
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+#game {
+  width: 400px;
+  height: 400px;
+  image-rendering: pixelated
+}

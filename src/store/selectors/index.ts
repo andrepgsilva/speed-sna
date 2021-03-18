@@ -8,6 +8,10 @@ export const stateObserverSelector = (state: StateType) => {
   return state.observer;
 }
 
-export const playerPositionSelector = (state: StateType) => {
+export const characterSelector = (state: StateType) => {
   return state.character;
+}
+
+export const traceToEraseSelector = (state: StateType) => {
+  return state.screen.traceToErase;
 }

@@ -2,8 +2,8 @@ import { SCREEN_MAX_X, SCREEN_MAX_Y } from "../screen";
 import { CharacterType, CharacterPositionType, StateType } from "../store";
 import { changeCharacterPartPositionState } from "../store/actions";
 
-export const PLAYER_WIDTH = 20;
-export const PLAYER_HEIGHT = 20;
+export const PLAYER_WIDTH = 1;
+export const PLAYER_HEIGHT = 1;
 
 export const playerCoordinatesLimits = () => {
   return {
