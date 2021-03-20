@@ -15,7 +15,6 @@ const playerInput = (key: string) => {
   
   if (isItNeedToSpawn) {
     enemiesObserver.notify(key);
-    changeTheIsItNeedToSpawnAnEnemyState(state, false);
   }
 
   characterObserver.notify(key);

@@ -3,7 +3,7 @@ import { characterObserverSelector, enemiesObserverSelector } from './store/sele
 import { drawCharacter, drawEnemies } from './screen';
 import { setupPlayerInput } from './player/input';
 import { addAnEnemyInState } from './enemies';
-import { removeLastEnemyPositionState } from './store/actions';
+import { changeTheIsItNeedToSpawnAnEnemyState, removeLastEnemyPositionState } from './store/actions';
 
 const main = (state: StateType) => {
   const page = document.querySelector('html');
@@ -27,8 +27,9 @@ const main = (state: StateType) => {
   enemiesObserver.subscribe(() => {
     removeLastEnemyPositionState(state);
     addAnEnemyInState(state);
-
     drawEnemies(context, state);
+    
+    changeTheIsItNeedToSpawnAnEnemyState(state, false);
   });
 
   setupPlayerInput(page);
