@@ -1,5 +1,5 @@
 import { state, StateType } from './store';
-import { stateObserverSelector } from './store/selectors';
+import { characterObserverSelector } from './store/selectors';
 import { drawCharacter, drawEnemies } from './screen';
 import { setupPlayerInput } from './player/input';
 
@@ -13,9 +13,9 @@ const main = (state: StateType) => {
   drawCharacter(context, state, false);
   drawEnemies(context, state);
 
-  const stateObserver = stateObserverSelector(state);
+  const characterObserver = characterObserverSelector(state);
 
-  stateObserver.subscribe(() => {
+  characterObserver.subscribe(() => {
     requestAnimationFrame(() => drawCharacter(context, state))
   });
 

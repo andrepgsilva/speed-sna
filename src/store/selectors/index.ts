@@ -4,8 +4,8 @@ export const gameAvailableInputSelector = (state: StateType) => {
   return state.input.availableInputs;
 }
 
-export const stateObserverSelector = (state: StateType) => {
-  return state.observer;
+export const characterObserverSelector = (state: StateType) => {
+  return state.observers.character;
 }
 
 export const characterSelector = (state: StateType) => {

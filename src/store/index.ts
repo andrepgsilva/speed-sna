@@ -24,8 +24,13 @@ export type CharacterType = {
   direction: CharacterDirectionType
 };
 
+type BaseObservers = {
+  character: ObservableType,
+  enemies: ObservableType
+}
+
 type StateType = {
-  observer: ObservableType,
+  observers: BaseObservers,
   character: CharacterType,
   enemies: Array<EnemyType>,
   input: {
@@ -39,7 +44,7 @@ type StateType = {
 };
 
 const state: StateType = {
-  observer: new Observable(),
+  observers: { character: new Observable(), enemies: new Observable()},
   character: {
     position: [
       { x: SCREEN_CENTER_X, y: SCREEN_CENTER_Y },

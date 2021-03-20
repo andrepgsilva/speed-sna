@@ -1,7 +1,7 @@
 import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH, wasThecharacterHeadCollidedWithFood } from "../index";
 import { StateType } from "../../store";
 import { addNewCharacterHead, changeCharacterDirectionState, changeCharacterPartPositionState } from "../../store/actions";
-import { characterSelector, stateObserverSelector } from "../../store/selectors";
+import { characterSelector } from "../../store/selectors";
 
 const playerActions = (state: StateType) => {
   const {width: horizontalLimit, height: verticalLimit} = playerCoordinatesLimits();
