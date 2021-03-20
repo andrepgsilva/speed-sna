@@ -1,4 +1,4 @@
-import { CharacterDirectionType, EnemyPositionType, StateType, TracePositionType } from "..";
+import { CharacterDirectionType, CharacterPositionType, EnemyPositionType, StateType, TracePositionType } from "..";
 
 export const changeCharacterPartPositionState = (state: StateType, index: number, x: number, y: number) => {
   state.character.position[index] = { x, y };
@@ -6,6 +6,10 @@ export const changeCharacterPartPositionState = (state: StateType, index: number
 
 export const changeCharacterDirectionState = (state: StateType, direction: CharacterDirectionType) => {
   state.character.direction = direction;
+}
+
+export const addNewCharacterHead = (state: StateType, characterHeadCoordinateToAdd: CharacterPositionType) => {
+  state.character.position.push(characterHeadCoordinateToAdd);
 }
 
 export const addEnemyPositionState = (state: StateType, enemyCoordinates: EnemyPositionType) => {
