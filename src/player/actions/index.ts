@@ -1,6 +1,6 @@
 import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH, wasThecharacterHeadCollidedWithFood } from "../index";
 import { StateType } from "../../store";
-import { addNewCharacterHead, changeCharacterDirectionState, changeCharacterPartPositionState } from "../../store/actions";
+import { addNewCharacterHead, changeCharacterDirectionState, changeCharacterPartPositionState, changeTheIsItNeedToSpawnAnEnemyState } from "../../store/actions";
 import { characterSelector } from "../../store/selectors";
 
 const playerActions = (state: StateType) => {
@@ -31,6 +31,7 @@ const playerActions = (state: StateType) => {
 
         if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }
 
         addCharacterBodyToHead(state, originalCharacter);
@@ -59,6 +60,7 @@ const playerActions = (state: StateType) => {
 
         if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }
 
         addCharacterBodyToHead(state, originalCharacter);
@@ -87,6 +89,7 @@ const playerActions = (state: StateType) => {
 
         if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }
 
         addCharacterBodyToHead(state, originalCharacter);
@@ -115,6 +118,7 @@ const playerActions = (state: StateType) => {
 
         if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }
         
         addCharacterBodyToHead(state, originalCharacter);

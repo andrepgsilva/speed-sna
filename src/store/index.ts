@@ -40,7 +40,8 @@ type StateType = {
     traceToErase: {
       position: TracePositionType
     }
-  }
+  },
+  isItNeedToSpawnAnEnemy: boolean,
 };
 
 const state: StateType = {
@@ -62,7 +63,9 @@ const state: StateType = {
     traceToErase: {
       position: { x: SCREEN_CENTER_X, y: SCREEN_CENTER_Y },
     } 
-  }
+  },
+  
+  isItNeedToSpawnAnEnemy: false
 }
 
 state.enemies.push(randomAnEnemyPosition(state));

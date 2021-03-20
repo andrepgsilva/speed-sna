@@ -1,4 +1,4 @@
-import { CharacterDirectionType, CharacterPositionType, EnemyPositionType, StateType, TracePositionType } from "..";
+import { CharacterDirectionType, CharacterPositionType, EnemyPositionType, state, StateType, TracePositionType } from "..";
 
 export const changeCharacterPartPositionState = (state: StateType, index: number, x: number, y: number) => {
   state.character.position[index] = { x, y };
@@ -16,6 +16,14 @@ export const addEnemyPositionState = (state: StateType, enemyCoordinates: EnemyP
   state.enemies.push({ position: enemyCoordinates });
 }
 
+export const removeLastEnemyPositionState = (state: StateType) => {
+  state.enemies.pop();
+}
+
 export const addTraceToEraseState = (state: StateType, traceToEraseCoordinates: TracePositionType) => {
   state.screen.traceToErase.position = traceToEraseCoordinates;
+}
+
+export const changeTheIsItNeedToSpawnAnEnemyState = (state: StateType, IsItNeedToSpawnAnEnemy: boolean) => {
+  state.isItNeedToSpawnAnEnemy = IsItNeedToSpawnAnEnemy;
 }

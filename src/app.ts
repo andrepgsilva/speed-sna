@@ -1,7 +1,9 @@
 import { state, StateType } from './store';
-import { characterObserverSelector } from './store/selectors';
+import { characterObserverSelector, enemiesObserverSelector } from './store/selectors';
 import { drawCharacter, drawEnemies } from './screen';
 import { setupPlayerInput } from './player/input';
+import { addAnEnemyInState } from './enemies';
+import { removeLastEnemyPositionState } from './store/actions';
 
 const main = (state: StateType) => {
   const page = document.querySelector('html');
@@ -14,9 +16,19 @@ const main = (state: StateType) => {
   drawEnemies(context, state);
 
   const characterObserver = characterObserverSelector(state);
+  const enemiesObserver = enemiesObserverSelector(state);
 
   characterObserver.subscribe(() => {
-    requestAnimationFrame(() => drawCharacter(context, state))
+    requestAnimationFrame(() => {
+      drawCharacter(context, state);
+    });
+  });
+
+  enemiesObserver.subscribe(() => {
+    removeLastEnemyPositionState(state);
+    addAnEnemyInState(state);
+
+    drawEnemies(context, state);
   });
 
   setupPlayerInput(page);
