@@ -1,9 +1,9 @@
 import { SCREEN_MAX_X, SCREEN_MAX_Y } from "../screen";
-import { CharacterType, CharacterPositionType, StateType } from "../store";
-import { changeCharacterPartPositionState } from "../store/actions";
+import { CharacterType, CoordinatesType, StateType } from "../store";
+import { addNewCharacterHead, changeCharacterPartPositionState } from "../store/actions";
 
-export const PLAYER_WIDTH = 20;
-export const PLAYER_HEIGHT = 20;
+export const PLAYER_WIDTH = 1;
+export const PLAYER_HEIGHT = 1;
 
 export const playerCoordinatesLimits = () => {
   return {
@@ -30,4 +30,28 @@ export const addCharacterBodyToHead = (state: StateType, character: CharacterTyp
       y: characterPartPosition.y
     };
   });
+}
+
+export const wasThecharacterHeadCollidedWithFood = (state: StateType, characterHeadCoordinates: CoordinatesType) => {
+  const character = state.character.position;
+  const characterHead = character[character.length - 1];
+
+  characterHeadCoordinates = characterHeadCoordinates !== undefined ? characterHeadCoordinates : characterHead;
+
+  const enemies = state.enemies;
+
+  let coordinateWhereTheCollisionOcurred = null;
+
+  const wasTheCollisionOcurred = enemies.some(enemy => {
+    if (characterHeadCoordinates.x === enemy.position.x && characterHeadCoordinates.y === enemy.position.y) {
+      coordinateWhereTheCollisionOcurred = {
+        x: enemy.position.x,
+        y: enemy.position.y
+      }
+
+      return true;
+    }
+  })
+
+  return wasTheCollisionOcurred ? coordinateWhereTheCollisionOcurred : false;
 }

@@ -1,11 +1,11 @@
-import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH } from "../index";
+import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH, wasThecharacterHeadCollidedWithFood } from "../index";
 import { StateType } from "../../store";
-import { changeCharacterDirectionState, changeCharacterPartPositionState } from "../../store/actions";
-import { playerPositionSelector } from "../../store/selectors";
+import { addNewCharacterHead, changeCharacterDirectionState, changeCharacterPartPositionState, changeTheIsItNeedToSpawnAnEnemyState } from "../../store/actions";
+import { characterSelector } from "../../store/selectors";
 
 const playerActions = (state: StateType) => {
   const {width: horizontalLimit, height: verticalLimit} = playerCoordinatesLimits();
-  const character = playerPositionSelector(state);
+  const character = characterSelector(state);
   const characterHead = character.position[character.position.length - 1];
 
   return {
@@ -15,6 +15,11 @@ const playerActions = (state: StateType) => {
       if (characterHead.y - PLAYER_WIDTH >= 0) {
         changeCharacterDirectionState(state, 'ArrowUp');
 
+        const nextCharacterHead = {
+          x: characterHead.x,
+          y: characterHead.y - PLAYER_WIDTH * 2
+        }
+
         const originalCharacter = JSON.parse(JSON.stringify(character));
 
         changeCharacterPartPositionState(
@@ -23,6 +28,11 @@ const playerActions = (state: StateType) => {
           characterHead.x, 
           characterHead.y - PLAYER_WIDTH
         );
+
+        if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
+          addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
+        }
 
         addCharacterBodyToHead(state, originalCharacter);
       }
@@ -34,6 +44,11 @@ const playerActions = (state: StateType) => {
       if (characterHead.y + PLAYER_WIDTH <= verticalLimit) {
         changeCharacterDirectionState(state, 'ArrowDown');
 
+        const nextCharacterHead = {
+          x: characterHead.x,
+          y: characterHead.y + PLAYER_WIDTH * 2
+        }
+
         const originalCharacter = JSON.parse(JSON.stringify(character));
 
         changeCharacterPartPositionState(
@@ -42,6 +57,11 @@ const playerActions = (state: StateType) => {
           characterHead.x, 
           characterHead.y + PLAYER_WIDTH
         );
+
+        if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
+          addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
+        }
 
         addCharacterBodyToHead(state, originalCharacter);
       }
@@ -53,6 +73,11 @@ const playerActions = (state: StateType) => {
       if (characterHead.x + PLAYER_WIDTH <= horizontalLimit) {
         changeCharacterDirectionState(state, 'ArrowRight');
 
+        const nextCharacterHead = {
+          x: characterHead.x + PLAYER_WIDTH * 2,
+          y: characterHead.y
+        }
+
         const originalCharacter = JSON.parse(JSON.stringify(character));
 
         changeCharacterPartPositionState(
@@ -61,6 +86,11 @@ const playerActions = (state: StateType) => {
           characterHead.x + PLAYER_WIDTH, 
           characterHead.y
         );
+
+        if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
+          addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
+        }
 
         addCharacterBodyToHead(state, originalCharacter);
       }
@@ -71,6 +101,11 @@ const playerActions = (state: StateType) => {
 
       if (characterHead.x - PLAYER_WIDTH >= 0) {
         changeCharacterDirectionState(state, 'ArrowLeft');
+
+        const nextCharacterHead = {
+          x: characterHead.x - PLAYER_WIDTH * 2,
+          y: characterHead.y
+        }
         
         const originalCharacter = JSON.parse(JSON.stringify(character));
 
@@ -80,6 +115,11 @@ const playerActions = (state: StateType) => {
           characterHead.x - PLAYER_WIDTH, 
           characterHead.y
         );
+
+        if (wasThecharacterHeadCollidedWithFood(state, nextCharacterHead)) {
+          addNewCharacterHead(state, nextCharacterHead);
+          changeTheIsItNeedToSpawnAnEnemyState(state, true);
+        }
         
         addCharacterBodyToHead(state, originalCharacter);
       }

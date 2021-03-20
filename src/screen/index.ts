@@ -1,5 +1,7 @@
 import { PLAYER_HEIGHT, PLAYER_WIDTH } from "../player";
 import { StateType } from "../store";
+import { addTraceToEraseState } from "../store/actions";
+import { traceToEraseSelector } from "../store/selectors";
 
 const {width: screenWidth, height: screenHeight} = canvasCoordinates();
 
@@ -17,8 +19,19 @@ function canvasCoordinates() {
   }
 }
 
-export const drawCharacter = (screen: CanvasRenderingContext2D, state: StateType) => {
-  screen.clearRect(0, 0, SCREEN_MAX_X, SCREEN_MAX_Y);
+const clearCharacterTrace = (screen: CanvasRenderingContext2D, state: StateType) => {
+  let traceToErase = traceToEraseSelector(state).position;
+
+  screen.clearRect(traceToErase.x, traceToErase.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+  const characterTail = state.character.position[0];
+    
+  addTraceToEraseState(state, characterTail);
+}
+
+export const drawCharacter = (screen: CanvasRenderingContext2D, state: StateType, clearFigures: boolean = true) => {
+  if (clearFigures) {
+    clearCharacterTrace(screen, state);
+  }
 
   state.character.position.forEach((characterPartPosition, index) => {
     screen.fillStyle = "black";
@@ -34,6 +47,19 @@ export const drawCharacter = (screen: CanvasRenderingContext2D, state: StateType
     screen.fillRect(
       characterPartPosition.x, 
       characterPartPosition.y, 
+      PLAYER_WIDTH, 
+      PLAYER_HEIGHT
+    );
+  });
+}
+
+export const drawEnemies = (screen: CanvasRenderingContext2D, state: StateType) => {
+  state.enemies.forEach(enemy => {
+    screen.fillStyle = "black";
+
+    screen.fillRect(
+      enemy.position.x, 
+      enemy.position.y, 
       PLAYER_WIDTH, 
       PLAYER_HEIGHT
     );

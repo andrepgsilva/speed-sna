@@ -1,19 +1,35 @@
 import { state, StateType } from './store';
-import { stateObserverSelector } from './store/selectors';
-import { drawCharacter } from './screen';
+import { characterObserverSelector, enemiesObserverSelector } from './store/selectors';
+import { drawCharacter, drawEnemies } from './screen';
 import { setupPlayerInput } from './player/input';
+import { addAnEnemyInState } from './enemies';
+import { changeTheIsItNeedToSpawnAnEnemyState, removeLastEnemyPositionState } from './store/actions';
 
 const main = (state: StateType) => {
   const page = document.querySelector('html');
   const canvas = document.getElementById('game') as HTMLCanvasElement;
+  
   const context = canvas.getContext('2d');
 
-  drawCharacter(context, state);
+  context.imageSmoothingEnabled = true;
+  drawCharacter(context, state, false);
+  drawEnemies(context, state);
 
-  const stateObserver = stateObserverSelector(state);
+  const characterObserver = characterObserverSelector(state);
+  const enemiesObserver = enemiesObserverSelector(state);
 
-  stateObserver.subscribe(() => {
-    requestAnimationFrame(() => drawCharacter(context, state))
+  characterObserver.subscribe(() => {
+    requestAnimationFrame(() => {
+      drawCharacter(context, state);
+    });
+  });
+
+  enemiesObserver.subscribe(() => {
+    removeLastEnemyPositionState(state);
+    addAnEnemyInState(state);
+    drawEnemies(context, state);
+    
+    changeTheIsItNeedToSpawnAnEnemyState(state, false);
   });
 
   setupPlayerInput(page);
