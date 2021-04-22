@@ -31,10 +31,12 @@ type BaseObservers = {
 
 type StateType = {
   observers: BaseObservers,
+  intervalID: number,
   character: CharacterType,
   enemies: Array<EnemyType>,
   input: {
-    availableInputs: Array<string>
+    availableInputs: Array<string>,
+    previousKeyPressed: string
   },
   screen: {
     traceToErase: {
@@ -47,6 +49,8 @@ type StateType = {
 
 const state: StateType = {
   observers: { character: new Observable(), enemies: new Observable()},
+  intervalID: 0,
+  
   character: {
     position: [
       { x: SCREEN_CENTER_X, y: SCREEN_CENTER_Y },
@@ -57,7 +61,8 @@ const state: StateType = {
   },
   enemies: [],
   input: {
-    availableInputs: ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft']
+    availableInputs: ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'],
+    previousKeyPressed: ''
   },
 
   screen: {

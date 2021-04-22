@@ -21,6 +21,14 @@ const playerInput = (key: string) => {
 
 export const setupPlayerInput = (context) => {
   context.addEventListener('keydown', (event) => {
-    playerInput(event.key);
+    state.input.previousKeyPressed = event.key;
+    
+    window.clearInterval(state.intervalID);
+
+    const timerId = window.setInterval(() => {
+      playerInput(event.key);
+    }, 150);
+
+    state.intervalID = timerId;
   });
 }
