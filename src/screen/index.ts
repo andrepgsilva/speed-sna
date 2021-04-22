@@ -1,5 +1,5 @@
 import { PLAYER_HEIGHT, PLAYER_WIDTH } from "../player";
-import { StateType } from "../store";
+import { CoordinatesType, StateType } from "../store";
 import { addTraceToEraseState } from "../store/actions";
 import { traceToEraseSelector } from "../store/selectors";
 
@@ -17,6 +17,18 @@ function canvasCoordinates() {
     width: canvas.width,
     height: canvas.height
   }
+}
+
+export const getAllCoordinatesOnTheScreen = () : Array<CoordinatesType> => {
+  const allCoordinatesOnTheScreen = [];
+
+  for (let x=1; x <= SCREEN_MAX_X - 1; x++) {
+      for (let y=1; y <= SCREEN_MAX_X - 1; y++) {
+        allCoordinatesOnTheScreen.push({ x, y })
+      }
+  }
+
+  return allCoordinatesOnTheScreen;
 }
 
 const clearCharacterTrace = (screen: CanvasRenderingContext2D, state: StateType) => {
@@ -55,7 +67,7 @@ export const drawCharacter = (screen: CanvasRenderingContext2D, state: StateType
 
 export const drawEnemies = (screen: CanvasRenderingContext2D, state: StateType) => {
   state.enemies.forEach(enemy => {
-    screen.fillStyle = "black";
+    screen.fillStyle = "purple";
 
     screen.fillRect(
       enemy.position.x, 

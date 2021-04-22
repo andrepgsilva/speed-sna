@@ -1,26 +1,38 @@
-import { SCREEN_MAX_X, SCREEN_MAX_Y } from "../screen"
 import { StateType } from "../store";
 import { addEnemyPositionState } from "../store/actions";
-import { characterSelector } from "../store/selectors"
 import { getRandomInt } from "../utils";
 
 export const randomAnEnemyPosition = (state = null) => {
-  const character = characterSelector(state);
-  const characterPosition = character.position;
+  const freeCoordinates = state.screen.screenMapCoordinates;
+  let auxFreeCoordinates = JSON.parse(JSON.stringify(freeCoordinates));
 
-  let enemyHorizontalPosition = getRandomInt(10, SCREEN_MAX_X);
-  let enemyVerticalPosition = getRandomInt(10, SCREEN_MAX_Y);
+  const characterPosition = state.character.position;
+  
+  for (let i = 0; i < characterPosition.length; i++) {
+    const position = characterPosition[i];
+    
+    freeCoordinates.forEach((coordinate, index) => {
+      const happenedCoordinateMatch = coordinate.x === position.x && coordinate.y === position.y;
+      
+      if (happenedCoordinateMatch) {
+        delete auxFreeCoordinates[index]
+      }
+    });
+  }
+
+  const randomFreeCoordinateIndex = getRandomInt(0, auxFreeCoordinates.length - 1);
+  const enemyCoordinate = auxFreeCoordinates[randomFreeCoordinateIndex];
 
   return {
     position: {
-      x: enemyHorizontalPosition,
-      y: enemyVerticalPosition
+      x: enemyCoordinate.x,
+      y: enemyCoordinate.y
     }
   }
 }
 
 export const addAnEnemyInState = (state: StateType) => {
   const enemyCoordinatesPosition = randomAnEnemyPosition(state).position;
-
+  
   addEnemyPositionState(state, enemyCoordinatesPosition);
 }

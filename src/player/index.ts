@@ -36,22 +36,9 @@ export const wasThecharacterHeadCollidedWithFood = (state: StateType, characterH
   const character = state.character.position;
   const characterHead = character[character.length - 1];
 
-  characterHeadCoordinates = characterHeadCoordinates !== undefined ? characterHeadCoordinates : characterHead;
+  if (characterHead.x === state.enemies[0].position.x && characterHead.y === state.enemies[0].position.y) {
+    return true
+  }
 
-  const enemies = state.enemies;
-
-  let coordinateWhereTheCollisionOcurred = null;
-
-  const wasTheCollisionOcurred = enemies.some(enemy => {
-    if (characterHeadCoordinates.x === enemy.position.x && characterHeadCoordinates.y === enemy.position.y) {
-      coordinateWhereTheCollisionOcurred = {
-        x: enemy.position.x,
-        y: enemy.position.y
-      }
-
-      return true;
-    }
-  })
-
-  return wasTheCollisionOcurred ? coordinateWhereTheCollisionOcurred : false;
+  return false
 }

@@ -1,7 +1,7 @@
 import { randomAnEnemyPosition } from '../enemies';
 import Observable, { ObservableType } from '../Observable';
 import { PLAYER_WIDTH } from '../player';
-import { SCREEN_CENTER_X, SCREEN_CENTER_Y } from '../screen';
+import { getAllCoordinatesOnTheScreen, SCREEN_CENTER_X, SCREEN_CENTER_Y } from '../screen';
 
 export type CoordinatesType = {
   x: number,
@@ -39,7 +39,8 @@ type StateType = {
   screen: {
     traceToErase: {
       position: TracePositionType
-    }
+    },
+    screenMapCoordinates: Array<CoordinatesType>
   },
   isItNeedToSpawnAnEnemy: boolean,
 };
@@ -62,7 +63,9 @@ const state: StateType = {
   screen: {
     traceToErase: {
       position: { x: SCREEN_CENTER_X, y: SCREEN_CENTER_Y },
-    } 
+    },
+    
+    screenMapCoordinates: getAllCoordinatesOnTheScreen()
   },
   
   isItNeedToSpawnAnEnemy: false

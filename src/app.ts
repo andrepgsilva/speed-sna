@@ -1,6 +1,6 @@
 import { state, StateType } from './store';
 import { characterObserverSelector, enemiesObserverSelector } from './store/selectors';
-import { drawCharacter, drawEnemies } from './screen';
+import { drawCharacter, drawEnemies, SCREEN_MAX_X, SCREEN_MAX_Y } from './screen';
 import { setupPlayerInput } from './player/input';
 import { addAnEnemyInState } from './enemies';
 import { changeTheIsItNeedToSpawnAnEnemyState, removeLastEnemyPositionState } from './store/actions';
@@ -27,8 +27,8 @@ const main = (state: StateType) => {
   enemiesObserver.subscribe(() => {
     removeLastEnemyPositionState(state);
     addAnEnemyInState(state);
-    drawEnemies(context, state);
     
+    drawEnemies(context, state);
     changeTheIsItNeedToSpawnAnEnemyState(state, false);
   });
 
