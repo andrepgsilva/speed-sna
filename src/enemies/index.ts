@@ -20,8 +20,13 @@ export const randomAnEnemyPosition = (state = null) => {
     });
   }
 
-  const randomFreeCoordinateIndex = getRandomInt(0, auxFreeCoordinates.length - 1);
-  const enemyCoordinate = auxFreeCoordinates[randomFreeCoordinateIndex];
+  auxFreeCoordinates =  auxFreeCoordinates.slice();
+
+  let enemyCoordinate = undefined;
+  
+  do {
+    enemyCoordinate = auxFreeCoordinates[getRandomInt(0, auxFreeCoordinates.length)];
+  } while(enemyCoordinate === undefined);
 
   return {
     position: {

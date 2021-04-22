@@ -1,6 +1,6 @@
 import { SCREEN_MAX_X, SCREEN_MAX_Y } from "../screen";
 import { CharacterType, CoordinatesType, StateType } from "../store";
-import { addNewCharacterHead, changeCharacterPartPositionState } from "../store/actions";
+import { changeCharacterPartPositionState } from "../store/actions";
 
 export const PLAYER_WIDTH = 1;
 export const PLAYER_HEIGHT = 1;
