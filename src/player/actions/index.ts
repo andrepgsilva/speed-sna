@@ -1,4 +1,4 @@
-import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH, didTheCharacterHeadCollideWithSomething } from "../index";
+import { addCharacterBodyToHead, playerCoordinatesLimits, PLAYER_WIDTH, didTheCharacterHeadCollideWithFood, didTheCharacterCollideWithItself } from "../index";
 import { StateType } from "../../store";
 import { addNewCharacterHead, changeCharacterDirectionState, changeCharacterPartPositionState, changeTheIsItNeedToSpawnAnEnemyState } from "../../store/actions";
 import { characterSelector } from "../../store/selectors";
@@ -30,7 +30,9 @@ const playerActions = (state: StateType) => {
           characterHead.y - PLAYER_WIDTH
         );
 
-        if (didTheCharacterHeadCollideWithSomething(state, nextCharacterHead)) {
+        if (didTheCharacterCollideWithItself(state, nextCharacterHead)) refreshWindow();
+
+        if (didTheCharacterHeadCollideWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
           changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }
@@ -62,7 +64,9 @@ const playerActions = (state: StateType) => {
           characterHead.y + PLAYER_WIDTH
         );
 
-        if (didTheCharacterHeadCollideWithSomething(state, nextCharacterHead)) {
+        if (didTheCharacterCollideWithItself(state, nextCharacterHead)) refreshWindow();
+
+        if (didTheCharacterHeadCollideWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
           changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }
@@ -70,7 +74,7 @@ const playerActions = (state: StateType) => {
         addCharacterBodyToHead(state, originalCharacter);
         return
       }
-      
+
       refreshWindow();
     },
 
@@ -94,7 +98,9 @@ const playerActions = (state: StateType) => {
           characterHead.y
         );
 
-        if (didTheCharacterHeadCollideWithSomething(state, nextCharacterHead)) {
+        if (didTheCharacterCollideWithItself(state, nextCharacterHead)) refreshWindow();
+
+        if (didTheCharacterHeadCollideWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
           changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }
@@ -126,7 +132,9 @@ const playerActions = (state: StateType) => {
           characterHead.y
         );
 
-        if (didTheCharacterHeadCollideWithSomething(state, nextCharacterHead)) {
+        if (didTheCharacterCollideWithItself(state, nextCharacterHead)) refreshWindow();
+        
+        if (didTheCharacterHeadCollideWithFood(state, nextCharacterHead)) {
           addNewCharacterHead(state, nextCharacterHead);
           changeTheIsItNeedToSpawnAnEnemyState(state, true);
         }

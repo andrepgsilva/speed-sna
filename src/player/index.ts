@@ -32,16 +32,26 @@ export const addCharacterBodyToHead = (state: StateType, character: CharacterTyp
   });
 }
 
-export const didTheCharacterHeadCollideWithSomething = (state: StateType, characterHeadCoordinates: CoordinatesType) => {
-  const character = state.character.position;
-  const characterHead = character[character.length - 1];
-
-  // Enemy collision
+export const didTheCharacterHeadCollideWithFood = (state: StateType, characterHeadCoordinates: CoordinatesType) => {
+  const characterCoodinates = state.character.position;
+  const characterHead = characterCoodinates[characterCoodinates.length - 1];
+  
   if (characterHead.x === state.enemies[0].position.x && characterHead.y === state.enemies[0].position.y) {
     return true
   }
 
-  // 
-
   return false
+}
+
+export const didTheCharacterCollideWithItself = (state: StateType, characterHeadCoordinates: CoordinatesType) => {
+  const characterCoodinates = state.character.position;
+  const characterHead = characterCoodinates[characterCoodinates.length - 1];
+
+  const selfCollisionNotHappened = characterCoodinates.slice(0, -1).every(characterPosition => {
+    const collisionHappened = characterPosition.x === characterHead.x && characterPosition.y === characterHead.y; 
+    
+    return ! collisionHappened;
+  });
+
+  return ! selfCollisionNotHappened;
 }
