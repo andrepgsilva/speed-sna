@@ -1,5 +1,9 @@
-# speed-sna
+# Speed-sna
+Classic snake game made with vanilla js and Canvas API.
 
+## Tools
+- Vanilla JS
+- Canvas API
 
 ## Project setup
 ```
