@@ -2,8 +2,9 @@
 Classic snake game made with vanilla js and Canvas API.
 
 ## Tools
-- Vanilla JS
+- Typescript
 - Canvas API
+- Snowpack
 
 ## Project setup
 ```
@@ -12,5 +13,5 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run start
 ```
